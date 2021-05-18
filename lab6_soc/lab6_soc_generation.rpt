@@ -1,0 +1,119 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate C:\Users\warri\Desktop\ece_385\lab6\lab6_soc.qsys --block-symbol-file --output-directory=C:\Users\warri\Desktop\ece_385\lab6\lab6_soc --family="MAX 10" --part=10M50DAF484C7G
+Progress: Loading lab6/lab6_soc.qsys
+Progress: Reading input file
+Progress: Adding KEY [altera_avalon_pio 18.1]
+Progress: Parameterizing module KEY
+Progress: Adding SDRAM [altera_avalon_new_sdram_controller 18.1]
+Progress: Parameterizing module SDRAM
+Progress: Adding SW [altera_avalon_pio 18.1]
+Progress: Parameterizing module SW
+Progress: Adding clk_0 [clock_source 18.1]
+Progress: Parameterizing module clk_0
+Progress: Adding hex_digits_pio [altera_avalon_pio 18.1]
+Progress: Parameterizing module hex_digits_pio
+Progress: Adding jtag_uart_0 [altera_avalon_jtag_uart 18.1]
+Progress: Parameterizing module jtag_uart_0
+Progress: Adding key [altera_avalon_pio 18.1]
+Progress: Parameterizing module key
+Progress: Adding keycode [altera_avalon_pio 18.1]
+Progress: Parameterizing module keycode
+Progress: Adding led [altera_avalon_pio 18.1]
+Progress: Parameterizing module led
+Progress: Adding leds_pio [altera_avalon_pio 18.1]
+Progress: Parameterizing module leds_pio
+Progress: Adding nios2_gen2_0 [altera_nios2_gen2 18.1]
+Progress: Parameterizing module nios2_gen2_0
+Progress: Adding onchip_memory2_0 [altera_avalon_onchip_memory2 18.1]
+Progress: Parameterizing module onchip_memory2_0
+Progress: Adding sdram_pll [altpll 18.1]
+Progress: Parameterizing module sdram_pll
+Progress: Adding spi_0 [altera_avalon_spi 18.1]
+Progress: Parameterizing module spi_0
+Progress: Adding sysid_qsys_0 [altera_avalon_sysid_qsys 18.1]
+Progress: Parameterizing module sysid_qsys_0
+Progress: Adding timer_0 [altera_avalon_timer 18.1]
+Progress: Parameterizing module timer_0
+Progress: Adding usb_gpx [altera_avalon_pio 18.1]
+Progress: Parameterizing module usb_gpx
+Progress: Adding usb_irq [altera_avalon_pio 18.1]
+Progress: Parameterizing module usb_irq
+Progress: Adding usb_rst [altera_avalon_pio 18.1]
+Progress: Parameterizing module usb_rst
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: lab6_soc.KEY: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: lab6_soc.SDRAM: SDRAM Controller will only be supported in Quartus Prime Standard Edition in the future release.
+Info: lab6_soc.jtag_uart_0: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
+Info: lab6_soc.key: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: lab6_soc.sysid_qsys_0: System ID is not assigned automatically. Edit the System ID parameter to provide a unique ID
+Info: lab6_soc.sysid_qsys_0: Time stamp will be automatically updated when this component is generated.
+Info: lab6_soc.usb_gpx: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: lab6_soc.usb_irq: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate C:\Users\warri\Desktop\ece_385\lab6\lab6_soc.qsys --synthesis=VERILOG --output-directory=C:\Users\warri\Desktop\ece_385\lab6\lab6_soc\synthesis --family="MAX 10" --part=10M50DAF484C7G
+Progress: Loading lab6/lab6_soc.qsys
+Progress: Reading input file
+Progress: Adding KEY [altera_avalon_pio 18.1]
+Progress: Parameterizing module KEY
+Progress: Adding SDRAM [altera_avalon_new_sdram_controller 18.1]
+Progress: Parameterizing module SDRAM
+Progress: Adding SW [altera_avalon_pio 18.1]
+Progress: Parameterizing module SW
+Progress: Adding clk_0 [clock_source 18.1]
+Progress: Parameterizing module clk_0
+Progress: Adding hex_digits_pio [altera_avalon_pio 18.1]
+Progress: Parameterizing module hex_digits_pio
+Progress: Adding jtag_uart_0 [altera_avalon_jtag_uart 18.1]
+Progress: Parameterizing module jtag_uart_0
+Progress: Adding key [altera_avalon_pio 18.1]
+Progress: Parameterizing module key
+Progress: Adding keycode [altera_avalon_pio 18.1]
+Progress: Parameterizing module keycode
+Progress: Adding led [altera_avalon_pio 18.1]
+Progress: Parameterizing module led
+Progress: Adding leds_pio [altera_avalon_pio 18.1]
+Progress: Parameterizing module leds_pio
+Progress: Adding nios2_gen2_0 [altera_nios2_gen2 18.1]
+Progress: Parameterizing module nios2_gen2_0
+Progress: Adding onchip_memory2_0 [altera_avalon_onchip_memory2 18.1]
+Progress: Parameterizing module onchip_memory2_0
+Progress: Adding sdram_pll [altpll 18.1]
+Progress: Parameterizing module sdram_pll
+Progress: Adding spi_0 [altera_avalon_spi 18.1]
+Progress: Parameterizing module spi_0
+Progress: Adding sysid_qsys_0 [altera_avalon_sysid_qsys 18.1]
+Progress: Parameterizing module sysid_qsys_0
+Progress: Adding timer_0 [altera_avalon_timer 18.1]
+Progress: Parameterizing module timer_0
+Progress: Adding usb_gpx [altera_avalon_pio 18.1]
+Progress: Parameterizing module usb_gpx
+Progress: Adding usb_irq [altera_avalon_pio 18.1]
+Progress: Parameterizing module usb_irq
+Progress: Adding usb_rst [altera_avalon_pio 18.1]
+Progress: Parameterizing module usb_rst
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: lab6_soc.KEY: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: lab6_soc.SDRAM: SDRAM Controller will only be supported in Quartus Prime Standard Edition in the future release.
+Info: lab6_soc.jtag_uart_0: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
+Info: lab6_soc.key: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: lab6_soc.sysid_qsys_0: System ID is not assigned automatically. Edit the System ID parameter to provide a unique ID
+Info: lab6_soc.sysid_qsys_0: Time stamp will be automatically updated when this component is generated.
+Info: lab6_soc.usb_gpx: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: lab6_soc.usb_irq: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: lab6_soc: Generating lab6_soc "lab6_soc" for QUARTUS_SYNTH
+Info: Inserting clock-crossing logic between cmd_demux.src4 and cmd_mux_004.sink0
+Info: Inserting clock-crossing logic between cmd_demux_001.src4 and cmd_mux_004.sink1
+Info: Inserting clock-crossing logic between rsp_demux_004.src0 and rsp_mux.sink4
+Info: Inserting clock-crossing logic between rsp_demux_004.src1 and rsp_mux_001.sink4
+Info: lab6_soc: Done "lab6_soc" with 1 modules, 0 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

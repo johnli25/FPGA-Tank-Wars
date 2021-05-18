@@ -1,0 +1,462 @@
+Johnx
+#2889
+
+Johnx — 04/17/2021
+module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size, Ball_sizey,
+                       output logic [7:0]  Red, Green, Blue );
+    
+    logic ball_on;
+      
+    always_comb
+    begin:Ball_on_proc
+     
+     if ((DrawX >= BallX - Ball_size) && (DrawX <= BallX + Ball_size) && (DrawY >= BallY - Ball_sizey) && (DrawY <= BallY + Ball_sizey))
+       ball_on = 1'b1;
+    else 
+       ball_on = 1'b0;
+    end 
+       
+    always_comb
+    begin:RGB_Display
+        if ((ball_on == 1'b1)) 
+        begin 
+            Red = 8'hff;
+            Green = 8'h55;
+            Blue = 8'h00;
+        end       
+        else 
+        begin 
+            Red = 8'h00; 
+            Green = 8'h00;
+            Blue = 8'h7f - DrawX[9:3];
+        end      
+    end 
+    
+endmodule
+color_mapper.sv
+ball b0(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode, .BallX(ballxsig), 
+.BallY(ballysig), .BallSx(ballsizexsig), .BallSy(ballsizeysig));
+
+vga_controller vga0(.Clk(MAX10_CLK1_50), .Reset(Reset_h), .hs(VGA_HS), .vs(VGA_VS),
+.pixel_clk(VGA_Clk), .blank, .sync, .DrawX(drawxsig), .DrawY(drawysig));
+
+color_mapper c0(.BallX(ballxsig), .BallY(ballysig), .DrawX(drawxsig), .DrawY(drawysig),
+.Ball_size(ballsizexsig), .Ball_sizey(ballsizeysig), .Red, .Green, .Blue);
+ Just make sure the module instantiations below in lab62.sv
+Coder — 04/18/2021
+//-------------------------------------------------------------------------
+//    Piston.sv                                                            --
+//    Viral Mehta                                                        --
+//    Spring 2005                                                        --
+//                                                                       --
+//    Modified by Stephen Kempf 03-01-2006                               --
+Expand
+message.txt
+6 KB
+//-------------------------------------------------------------------------
+//    Color_Mapper.sv                                                    --
+//    Stephen Kempf                                                      --
+//    3-1-06                                                             --
+//                                                                       --
+//    Modified by David Kesler  07-16-2008                               --
+Expand
+message.txt
+4 KB
+//-------------------------------------------------------------------------
+//                                                                       --
+//                                                                       --
+//      For use with ECE 385 Lab 62                                       --
+//      UIUC ECE Department                                              --
+//-------------------------------------------------------------------------
+Expand
+message.txt
+7 KB
+ball b0(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode, .BallX(ballxsig), 
+.BallY(ballysig), .BallSx(ballsizexsig), .BallSy(ballsizeysig));
+
+
+piston p0(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode, .PistonX(pistonxsig), 
+.PistonY(pistonysig), .Pistons(pistonsizesig));
+
+vga_controller vga0(.Clk(MAX10_CLK1_50), .Reset(Reset_h), .hs(VGA_HS), .vs(VGA_VS),
+.pixel_clk(VGA_Clk), .blank, .sync, .DrawX(drawxsig), .DrawY(drawysig));
+
+color_mapper c0(.BallX(ballxsig), .BallY(ballysig), .DrawX(drawxsig), .DrawY(drawysig),
+.Ball_size(ballsizesig), .PistonX(pistonxsig), .PistonY(pistonysig), .Piston_size(pistonsizesig), .Red, .Green, .Blue);
+
+endmodule
+Coder — 04/19/2021
+@Johnx
+Coder — 04/20/2021
+//-------------------------------------------------------------------------
+//    Color_Mapper.sv                                                    --
+//    Stephen Kempf                                                      --
+//    3-1-06                                                             --
+//                                                                       --
+//    Modified by David Kesler  07-16-2008                               --
+Expand
+message.txt
+3 KB
+module font_rom ( input [10:0]	addr,
+						output [7:0]	data
+					 );
+
+	parameter ADDR_WIDTH = 11;
+   parameter DATA_WIDTH =  8;
+... (17 KB left)
+Expand
+message.txt
+67 KB
+How I got the sprites/new Tank
+Need to figure out how to move with the ball.sv
+Johnx — 04/20/2021
+@Coder Wanna get on soon?
+Johnx — 04/21/2021
+@Coder Can you send your what your updated top-level and new tank/piston module looks like?
+Or did you have those in the first place?
+Coder — 04/21/2021
+//-------------------------------------------------------------------------
+//    Ball.sv                                                            --
+//    Viral Mehta                                                        --
+//    Spring 2005                                                        --
+//                                                                       --
+//    Modified by Stephen Kempf 03-01-2006                               --
+Expand
+message.txt
+6 KB
+//-------------------------------------------------------------------------
+//    Color_Mapper.sv                                                    --
+//    Stephen Kempf                                                      --
+//    3-1-06                                                             --
+//                                                                       --
+//    Modified by David Kesler  07-16-2008                               --
+Expand
+message.txt
+3 KB
+//-------------------------------------------------------------------------
+//                                                                       --
+//                                                                       --
+//      For use with ECE 385 Lab 62                                       --
+//      UIUC ECE Department                                              --
+//-------------------------------------------------------------------------
+Expand
+message.txt
+7 KB
+module font_rom ( input [10:0]	addr,
+						output [7:0]	data
+					 );
+
+	parameter ADDR_WIDTH = 11;
+   parameter DATA_WIDTH =  8;
+... (17 KB left)
+Expand
+message.txt
+67 KB
+//-------------------------------------------------------------------------
+//    Piston.sv                                                            --
+//    Viral Mehta                                                        --
+//    Spring 2005                                                        --
+//                                                                       --
+//    Modified by Stephen Kempf 03-01-2006                               --
+Expand
+message.txt
+5 KB
+You don't need piston sv
+Rgiht now I'm working on shooting stuff
+Ball.sv is basically where the tank is kinda made
+Need's to be adjusted a bit though
+Trying to add a spacebar keycode, and then in there we declare the (shooting bullet module) and yeah
+The tank moves
+There is a glitch with moving sideways I need OH to figure out
+Coder — 04/27/2021
+@Johnx
+Johnx — 04/27/2021
+yeah gimme a sec
+Johnx — Today at 12:50 AM
+@Coder Can you send it before you go to sleep or tmrw early morning?
+Coder — Today at 3:00 PM
+//-------------------------------------------------------------------------
+//    bullet.sv                                                            --
+//    Viral Mehta                                                        --
+//    Spring 2005                                                        --
+//                                                                       --
+//    Modified by Stephen Kempf 03-01-2006                               --
+//                              03-12-2007                               --
+//    Translated by Joe Meng    07-07-2013                               --
+//    Fall 2014 Distribution                                             --
+//                                                                       --
+//    For use with ECE 298 Lab 7                                         --
+//    UIUC ECE Department                                                --
+//-------------------------------------------------------------------------
+
+
+
+module  bullet ( input Reset, frame_clk, 
+
+					input logic [9:0] ballX, ballY,
+					input [7:0] keycode,
+               output [9:0]  bulletX, bulletY, bulletSx, bulletSy,
+					output [1:0] bulletOn);
+    
+    
+	 
+	 
+	 //In order to make a bullet we need the ball x and y, reset, keycode, we will output the the position of the bullet
+	 
+	 
+	 logic [9:0] bullet_X_Pos, bullet_X_Motion, bullet_Y_Pos, bullet_Y_Motion, bulletx_Size, bullety_Size;
+	 logic [1:0] bullet_on; 
+	 logic flag;
+//	 logic [10:0] 
+	 
+    parameter [9:0] bullet_X_Center=320;  // Center position on the X axis
+    parameter [9:0] bullet_Y_Center=240;  // Center position on the Y axis
+    parameter [9:0] bullet_X_Min=0;       // Leftmost point on the X axis
+    parameter [9:0] bullet_X_Max=639;     // Rightmost point on the X axis
+    parameter [9:0] bullet_Y_Min=0;       // Topmost point on the Y axis
+    parameter [9:0] bullet_Y_Max=479;     // Bottommost point on the Y axis
+    parameter [9:0] bullet_X_Step=1;      // Step size on the X axis
+    parameter [9:0] bullet_Y_Step=1;      // Step size on the Y axis
+
+    assign bulletx_Size = 10;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
+	 assign bullety_Size = 20;
+
+    always_ff @ (posedge Reset or posedge frame_clk )
+    begin: Move_bullet
+        if (Reset)  // Asynchronous Reset
+        begin 
+            bullet_Y_Motion <= 10'd0; //bullet_Y_Step;
+				bullet_X_Motion <= 10'd0; //bullet_X_Step;
+				bullet_Y_Pos <= ballX;
+				bullet_X_Pos <= ballY;
+				flag = 1'b0;
+        end
+        
+        else 
+        begin 
+		  /*
+				 if ( (bullet_Y_Pos + bullety_Size) >= bullet_Y_Max )  // bullet is at the bottom edge, BOUNCE!
+					  bullet_Y_Motion <= (~ (bullet_Y_Step) + 1'b1);  // 2's complement.
+					  
+				 else if ( (bullet_Y_Pos - bullety_Size) <= bullet_Y_Min )  // bullet is at the top edge, BOUNCE!
+					  bullet_Y_Motion <= bullet_Y_Step;
+					  
+				  else if ( (bullet_X_Pos + bulletx_Size) >= bullet_X_Max )  // bullet is at the Right edge, BOUNCE!
+					  bullet_X_Motion <= (~ (bullet_X_Step) + 1'b1);  // 2's complement.
+					  
+				 else if ( (bullet_X_Pos - bulletx_Size) <= bullet_X_Min )  // bullet is at the Left edge, BOUNCE!
+					  bullet_X_Motion <= bullet_X_Step;
+					  
+				 else 
+					  bullet_Y_Motion <= bullet_Y_Motion;  // bullet is somewhere in the middle, don't bounce, just keep moving
+				*/	
+		       
+				 
+				 case (keycode)
+				 
+				 8'h2c : begin //spacebar
+							  //declare bullet here
+							  bullet_Y_Motion <= -20;
+							  bullet_on = 1'b1;
+							  bullet_Y_Pos <= (ballY-20);  // Update bullet position, have it move up everytime
+							  bullet_X_Pos <= (ballX);
+							  flag <= 1'b0;  
+						   end
+							  
+			    default: 
+				 begin
+					if ((bullet_Y_Pos - bullety_Size) <= bullet_Y_Min )  // bullet is at the top edge, BOUNCE!
+					  begin
+						bullet_Y_Pos <= (ballY-20);  // Update bullet position, have it move up everytime
+						bullet_X_Pos <= (ballX);
+						bullet_Y_Motion <= 0;
+						bullet_on = 1'b0;
+						flag <= 1'b1;
+						
+					  end
+					else
+... (36 lines left)
+Collapse
+message.txt
+5 KB
+//-------------------------------------------------------------------------
+//    Color_Mapper.sv                                                    --
+//    Stephen Kempf                                                      --
+//    3-1-06                                                             --
+//                                                                       --
+//    Modified by David Kesler  07-16-2008                               --
+Expand
+message.txt
+4 KB
+module font_rom ( input [10:0]	addr,
+						output [15:0]	data
+					 );
+
+	parameter ADDR_WIDTH = 11;
+   parameter DATA_WIDTH =  16;
+... (17 KB left)
+Expand
+message.txt
+67 KB
+//-------------------------------------------------------------------------
+//                                                                       --
+//                                                                       --
+//      For use with ECE 385 Lab 62                                       --
+//      UIUC ECE Department                                              --
+//-------------------------------------------------------------------------
+Expand
+message.txt
+7 KB
+So follow these instructions
+You need the bullet.sv file (the first one) copy word for word
+You need to update your color mapper to include the bullet stuff and the tank stuff and the INPUTS and OUTPUTs
+Update your lab6 top module to include the new inputs and oputputs see at the bottom, see also the renaming and declaration of variables in the middle of the file
+You need the new complete udpate font rom file
+Total time should take is 20 miniutes to incorporate
+There is a bug with the bullet
+It shooots normaly when moving the tank in the x direction
+But in the y direction it keeps looping the bullet
+The TA wasn't able to figure it out in OH for the past 2 hours I spent
+He said try model sim to see if the vlaues are restingg
+If you can't solve it I'm just gonna email Kevin cause hes the goat
+But lmk if you got questions follow the instructions above
+Color mpaper will b e the weirdest so essentially copy the new if else conditions, variable names, and the rgb vals and remember the inputs and outputs
+Just be careful with it
+but it should make sense since you said you understoof color mapper
+Lmk if you got question @Johnx
+﻿
+//-------------------------------------------------------------------------
+//    bullet.sv                                                            --
+//    Viral Mehta                                                        --
+//    Spring 2005                                                        --
+//                                                                       --
+//    Modified by Stephen Kempf 03-01-2006                               --
+//                              03-12-2007                               --
+//    Translated by Joe Meng    07-07-2013                               --
+//    Fall 2014 Distribution                                             --
+//                                                                       --
+//    For use with ECE 298 Lab 7                                         --
+//    UIUC ECE Department                                                --
+//-------------------------------------------------------------------------
+
+
+
+module  bullet ( input Reset, frame_clk, 
+
+					input logic [9:0] ballX, ballY,
+					input [7:0] keycode,
+               output [9:0]  bulletX, bulletY, bulletSx, bulletSy,
+					output [1:0] bulletOn);
+    
+    
+	 
+	 
+	 //In order to make a bullet we need the ball x and y, reset, keycode, we will output the the position of the bullet
+	 
+	 
+	 logic [9:0] bullet_X_Pos, bullet_X_Motion, bullet_Y_Pos, bullet_Y_Motion, bulletx_Size, bullety_Size;
+	 logic [1:0] bullet_on; 
+	 logic flag;
+//	 logic [10:0] 
+	 
+    parameter [9:0] bullet_X_Center=320;  // Center position on the X axis
+    parameter [9:0] bullet_Y_Center=240;  // Center position on the Y axis
+    parameter [9:0] bullet_X_Min=0;       // Leftmost point on the X axis
+    parameter [9:0] bullet_X_Max=639;     // Rightmost point on the X axis
+    parameter [9:0] bullet_Y_Min=0;       // Topmost point on the Y axis
+    parameter [9:0] bullet_Y_Max=479;     // Bottommost point on the Y axis
+    parameter [9:0] bullet_X_Step=1;      // Step size on the X axis
+    parameter [9:0] bullet_Y_Step=1;      // Step size on the Y axis
+
+    assign bulletx_Size = 10;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
+	 assign bullety_Size = 20;
+
+    always_ff @ (posedge Reset or posedge frame_clk )
+    begin: Move_bullet
+        if (Reset)  // Asynchronous Reset
+        begin 
+            bullet_Y_Motion <= 10'd0; //bullet_Y_Step;
+				bullet_X_Motion <= 10'd0; //bullet_X_Step;
+				bullet_Y_Pos <= ballX;
+				bullet_X_Pos <= ballY;
+				flag = 1'b0;
+        end
+        
+        else 
+        begin 
+		  /*
+				 if ( (bullet_Y_Pos + bullety_Size) >= bullet_Y_Max )  // bullet is at the bottom edge, BOUNCE!
+					  bullet_Y_Motion <= (~ (bullet_Y_Step) + 1'b1);  // 2's complement.
+					  
+				 else if ( (bullet_Y_Pos - bullety_Size) <= bullet_Y_Min )  // bullet is at the top edge, BOUNCE!
+					  bullet_Y_Motion <= bullet_Y_Step;
+					  
+				  else if ( (bullet_X_Pos + bulletx_Size) >= bullet_X_Max )  // bullet is at the Right edge, BOUNCE!
+					  bullet_X_Motion <= (~ (bullet_X_Step) + 1'b1);  // 2's complement.
+					  
+				 else if ( (bullet_X_Pos - bulletx_Size) <= bullet_X_Min )  // bullet is at the Left edge, BOUNCE!
+					  bullet_X_Motion <= bullet_X_Step;
+					  
+				 else 
+					  bullet_Y_Motion <= bullet_Y_Motion;  // bullet is somewhere in the middle, don't bounce, just keep moving
+				*/	
+		       
+				 
+				 case (keycode)
+				 
+				 8'h2c : begin //spacebar
+							  //declare bullet here
+							  bullet_Y_Motion <= -20;
+							  bullet_on = 1'b1;
+							  bullet_Y_Pos <= (ballY-20);  // Update bullet position, have it move up everytime
+							  bullet_X_Pos <= (ballX);
+							  flag <= 1'b0;  
+						   end
+							  
+			    default: 
+				 begin
+					if ((bullet_Y_Pos - bullety_Size) <= bullet_Y_Min )  // bullet is at the top edge, BOUNCE!
+					  begin
+						bullet_Y_Pos <= (ballY-20);  // Update bullet position, have it move up everytime
+						bullet_X_Pos <= (ballX);
+						bullet_Y_Motion <= 0;
+						bullet_on = 1'b0;
+						flag <= 1'b1;
+						
+					  end
+					else
+					  begin
+					  
+					   if (flag == 1'b1)
+							begin
+							bullet_on = 1'b0;
+							bullet_Y_Pos <= (ballY-20);  // Update bullet position, have it move up everytime
+							bullet_X_Pos <= (ballX);
+							bullet_Y_Motion = 0;
+							end
+						
+						else 
+							begin
+							bullet_Y_Pos <= (bullet_Y_Pos + bullet_Y_Motion);
+							bullet_on = 1'b1;
+							end
+					 end
+				 end
+			    endcase	
+				 
+		end  
+    end
+       
+    assign bulletX = bullet_X_Pos;
+   
+    assign bulletY = bullet_Y_Pos;
+   
+    assign bulletSx = bulletx_Size;
+	 
+	 assign bulletSy = bullety_Size;
+	 
+	 assign bulletOn = bullet_on;
+	 
+endmodule
+message.txt
+5 KB

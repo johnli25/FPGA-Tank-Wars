@@ -1,0 +1,115 @@
+module game_sm(input logic frame_clk,
+					input logic Reset,
+					
+					input logic shot_hit1,
+					input logic shot_hit2,
+					input logic press_restart, 
+					output logic [2:0] heart1_display,
+					output logic [2:0] heart2_display,
+					output logic game_over_display);
+
+enum logic [2:0] {
+WAIT,
+START,
+DONE,
+PLAY, //move, shoot, etc.
+TANK1_BULLET,
+TANK2_BULLET
+//TANK1_LIFE,
+//TANK2_LIFE,
+} state, next_state;
+
+logic [2:0] count;
+logic [2:0] next_count;
+
+logic [2:0] count2;
+logic [2:0] next_count2;
+
+always_ff @ (posedge frame_clk) begin
+	if (Reset) begin
+		state <= START; 
+		count <= 3'b0;
+		count2 <= 3'b0;
+//		heart1_display <= 3'b0;
+//		heart2_display <= 3'b0;
+
+	end
+	else 
+		state <= next_state;
+		count <= next_count;
+		count2 <= next_count2;
+		
+end
+
+always_comb begin
+	next_count = count;
+	next_count2 = count2;	
+	heart1_display = 3'b0; //or 5?
+	heart2_display = 3'b0;
+	game_over_display = 1'b0;
+	
+	case(state)
+	
+	START: begin 
+		next_count = 3'd5;
+		next_count2 = 3'd5;	
+		heart1_display = 3'd5;
+		heart2_display = 3'd5;
+		game_over_display = 1'b0;
+		next_state = PLAY;		
+	end
+
+	PLAY: begin
+
+		if (shot_hit1 == 1'b1) 
+			next_state = TANK1_BULLET;
+			
+		else if (shot_hit2 == 1'b1) begin
+			next_state = TANK2_BULLET;		
+		end
+		
+		else 
+			next_state = PLAY; 		
+	end
+	
+	TANK1_BULLET: begin
+		next_count = count2 - 3'd1;
+		heart1_display = next_count; //turns 1 one heart off or black 
+		if (count == 3'd0)
+			next_state = DONE;
+		else 
+			next_state = PLAY;
+	
+	end
+	
+	TANK2_BULLET: begin
+		next_count2 = count2 - 3'd1;
+		heart2_display = next_count2; //turns 1 one heart off or black 
+		if (count2 == 3'd0)
+			next_state = DONE;
+		else 
+			next_state = PLAY;	
+	
+	end
+	
+	DONE: begin
+		game_over_display = 1'b1; //color mapper: game over-end screen
+		if (press_restart) //keycode
+			next_state = START;
+		else 
+			next_state = DONE;	
+	end
+	
+	default: begin
+		heart1_display = 3'b0; //or 5?
+		heart2_display = 3'b0;
+		game_over_display = 1'b0;
+	
+		next_state = START; //or PLAY?
+	end
+	
+	endcase
+	
+end
+
+endmodule

@@ -1,0 +1,52 @@
+module testbench2();
+
+timeunit 10ns;
+
+timeprecision 1ns;
+
+logic Reset;
+logic frame_clk = 0;
+logic shot_hit1;
+logic shot_hit2;
+logic press_restart;
+ logic [2:0] heart1_display;
+ logic [2:0] heart2_display;
+ logic game_over_display;
+
+always begin: CLOCK_GENERATION
+#1 frame_clk = ~frame_clk;
+end
+
+initial begin: CLOCK_INITIALIZATION
+	frame_clk = 0;
+end
+
+game_fsm gsm(.*);
+
+initial begin
+Reset = 0;
+shot_hit1 = 1'b0;
+shot_hit2 = 1'b0;
+press_restart = 1'b0;
+
+#2 Reset = 1;
+#2 Reset = 0;
+
+#2 shot_hit1 = 0;
+#2 shot_hit1 = 1;
+
+#2 shot_hit1 = 0;
+#2 shot_hit1 = 1;
+
+#2 shot_hit1 = 0;
+#2 shot_hit1 = 1;
+
+#2 shot_hit1 = 0;
+#2 shot_hit1 = 1;
+
+#2 shot_hit1 = 0;
+#2 shot_hit1 = 1;
+
+end
+
+endmodule
