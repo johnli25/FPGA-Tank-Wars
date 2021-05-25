@@ -1,4 +1,4 @@
-#Tank Wars (game) for FPGA
+# Tank Wars (game) for FPGA
 
 ### Final project for ECE 385
 
